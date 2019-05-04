@@ -58,7 +58,7 @@ namespace GraniteHouse.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
+            // REGISTER ADMIN SUPERADMIN
             [Required]
             public string Name { get; set; }
             [Required]
@@ -66,6 +66,8 @@ namespace GraniteHouse.Areas.Identity.Pages.Account
             public string PhoneNumber { get; set; }
             [Display(Name = "Is Super Admin  ")]
             public bool IsSuperAdmin { get; set; }
+            [Display(Name = "Is Admin ")]
+            public bool IsAdmin { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -80,6 +82,8 @@ namespace GraniteHouse.Areas.Identity.Pages.Account
             {
                 var user = new ApplicationUser { Name = Input.Name, UserName = Input.Email, Email = Input.Email, PhoneNumber = Input.PhoneNumber };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                
+                //Create Admin SuperAdmin EndUser
                 if (result.Succeeded)
                 {
                     if (!await _roleManager.RoleExistsAsync(StaticUtility.AdminEndUser))
@@ -89,20 +93,24 @@ namespace GraniteHouse.Areas.Identity.Pages.Account
                     if(!await _roleManager.RoleExistsAsync(StaticUtility.SuperAdminEndUser))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(StaticUtility.SuperAdminEndUser));
-
+                    }
+                    if (!await _roleManager.RoleExistsAsync(StaticUtility.EndUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(StaticUtility.EndUser));
                     }
 
                     if (Input.IsSuperAdmin)
                     {
                         await _userManager.AddToRoleAsync(user, StaticUtility.SuperAdminEndUser);
                     }
-                    else
+                    if (Input.IsAdmin)
                     {
                         await _userManager.AddToRoleAsync(user, StaticUtility.AdminEndUser);
                     }
-
-
-
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, StaticUtility.EndUser);
+                    }
 
 
                     _logger.LogInformation("User created a new account with password.");
@@ -120,7 +128,7 @@ namespace GraniteHouse.Areas.Identity.Pages.Account
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     //return LocalRedirect(returnUrl);
 
-                    return RedirectToAction("Index", "AdminUsers", new { area = "Admin"});
+                    return RedirectToAction("Index", "Home", new { area = "Customer"});
                 }
                 foreach (var error in result.Errors)
                 {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GraniteHouse.Data;
 using GraniteHouse.Extensions;
 using GraniteHouse.Models;
@@ -25,7 +26,7 @@ namespace GraniteHouse.Areas.Customer.Controllers
         }
 
         //GET INDEX SHOPPING CART
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             List<int> listShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
 
@@ -33,13 +34,12 @@ namespace GraniteHouse.Areas.Customer.Controllers
             {
                 foreach (int cartItem in listShoppingCart)
                 {
-                    Products products = _db.Products.Include(p => p.SpecialTags).Include(p => p.ProductTypes).Where(p => p.Id == cartItem).FirstOrDefault();
-                    ShoppingCartVM.Products.Add(products);
+                    Products prod = _db.Products.Include(p => p.SpecialTags).Include(p => p.ProductTypes).Where(p => p.Id == cartItem).FirstOrDefault();
+                    ShoppingCartVM.Products.Add(prod);
                 }
             }
             return View(ShoppingCartVM);
         }
-
         //GET INDEX SHOPPING CART
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -57,7 +57,7 @@ namespace GraniteHouse.Areas.Customer.Controllers
 
             int appointmentId = appointments.Id;
 
-            foreach (var productId in listCartItems)
+            foreach (int productId in listCartItems)
             {
                 ProductsSelectedForAppointment productsSelectedForAppointment = new ProductsSelectedForAppointment()
                 {
@@ -70,7 +70,7 @@ namespace GraniteHouse.Areas.Customer.Controllers
             listCartItems = new List<int>();
             HttpContext.Session.Set("ssShoppingCart", listCartItems);
 
-            return RedirectToAction("AppointmentConfirmation","ShoppingCart", new { Id = appointmentId } );
+            return RedirectToAction("AppointmentConfirmation", "ShoppingCart", new { Id = appointmentId });
         }
 
         //REMOVE FROM SHOPPING CART SESSION
@@ -78,7 +78,7 @@ namespace GraniteHouse.Areas.Customer.Controllers
         {
             List<int> listCartItems = HttpContext.Session.Get<List<int>>("ssShoppingCart");
 
-            if(listCartItems.Count > 0)
+            if (listCartItems.Count > 0)
             {
                 if (listCartItems.Contains(id))
                 {

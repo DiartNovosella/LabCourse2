@@ -85,7 +85,62 @@ namespace GraniteHouse.Areas.Admin.Controllers
         public IActionResult DeleteConfirmed(string id)
         {
             ApplicationUser userFromDb = _db.ApplicationUsers.Where(u => u.Id == id).FirstOrDefault();
-            userFromDb.LockoutEnd = DateTime.Now.AddYears(100);
+            //userFromDb.LockoutEnd = DateTime.Now.AddYears(100);
+            _db.Remove(userFromDb);
+
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        //GET DISABLE 
+        public async Task<IActionResult> Disable(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var userFromDb = await _db.ApplicationUsers.FindAsync(id);
+            if (userFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(userFromDb);
+        }
+        //POST DISABLE
+        [HttpPost, ActionName("Disable")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DisableConfirmed(string id)
+        {
+            ApplicationUser userFromDb = _db.ApplicationUsers.Where(u => u.Id == id).FirstOrDefault();
+            userFromDb.LockoutEnd = DateTime.Now.AddYears(1);
+
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        //GET ENABLE 
+        public async Task<IActionResult> Enable(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var userFromDb = await _db.ApplicationUsers.FindAsync(id);
+            if (userFromDb == null)
+            {
+                return NotFound();
+            }
+
+            return View(userFromDb);
+        }
+        //POST DISABLE
+        [HttpPost, ActionName("Disable")]
+        [ValidateAntiForgeryToken]
+        public IActionResult EnableConfirmed(string id)
+        {
+            ApplicationUser userFromDb = _db.ApplicationUsers.Where(u => u.Id == id).FirstOrDefault();
+            userFromDb.LockoutEnd = null;
 
             _db.SaveChanges();
             return RedirectToAction(nameof(Index));

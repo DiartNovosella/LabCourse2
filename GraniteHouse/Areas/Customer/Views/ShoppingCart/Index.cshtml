@@ -11,7 +11,7 @@
     <form method="post">
         @if (Model.Products.Count > 0)
         {
-            <div class="border rounded p-2 row">
+             <div class="border rounded p-2 row">
                 <div class="col-8 border-right">
                     <table class="table table-responsive" style="width: 100%;">
                         <tr class="table table-active">
@@ -99,6 +99,10 @@
                 </div>
             </div>
         }
+        else
+        {
+           <div>You have no items in cart</div>
+        }
     </form>
 </div>
 
@@ -120,6 +124,5 @@
             dropdown: true,
             scrollbar: true
         });
-
     </script>
 }

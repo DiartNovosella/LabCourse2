@@ -9,12 +9,61 @@
     <form method="get">
         <h2 class="text-dark">Appointment List</h2>
         <hr />
-        <div class="container">
 
+        <div class="bg-light rounded p-3 mb-1 ">
+            <div class="col-12 mt-3">
+                <div class="row">
+                    <div class="col-2">
+                        Customer Name:
+                    </div>
+                    <div class="col-4">
+                        @Html.Editor("searchName", new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-2">
+                        Customer Email:
+                    </div>
+                    <div class="col-4">
+                        @Html.Editor("searchEmail", new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-3">
+                <div class="row">
+                    <div class="col-2">
+                        Phone Number:
+                    </div>
+                    <div class="col-4">
+                        @Html.Editor("searchPhoneNumber", new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-2">
+                        Appointment Date:
+                    </div>
+                    <div class="col-4">
+                        @Html.Editor("searchAppointmentDate", new { htmlAttributes = new { @class = "form-control", @id = "datePicker" } })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-3">
+                <div class="row">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" name="submit" value="Search" class="btn btn-primary form-control">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <br />
-
         <div>
             <table class="table table-striped border">
                 <tr class="table-info">
@@ -40,7 +89,7 @@
                     <th></th>
                 </tr>
                 @foreach (var item in Model.Appointments)
-                {
+                 {
                     <tr>
                         <td>
                             @Html.DisplayFor(m => item.SalesPerson.Name)
@@ -64,11 +113,30 @@
                             <partial name="_TableButtonPartial" model="item.Id" />
                         </td>
                     </tr>
-                }
+                 }
             </table>
         </div>
 
     </form>
 </div>
 
+@section Scripts{
+    <script>
+        $(function () {
+            $("#datePicker").datepicker({
+                minDate: + 1, maxDate: "+3M"
+            });
+        });
 
+        $('.timepicker').timepicker({
+            timeFormat: 'h:mm',
+            interval: 20,
+            minTime: '10',
+            maxTime: '6:00pm',
+            startTime: '09:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+    </script>
+}

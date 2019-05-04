@@ -33,7 +33,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-md navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -60,8 +60,11 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Admin" asp-controller="AdminUsers" asp-action="Index">Admin Users</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Admin" asp-controller="Appointments" asp-action="Index">Appointments</a>
+                    </li>
                 }
-                @if (User.IsInRole(StaticUtility.SuperAdminEndUser) || User.IsInRole(StaticUtility.AdminEndUser))
+                @if (User.IsInRole(StaticUtility.AdminEndUser))
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Admin" asp-controller="Appointments" asp-action="Index">Appointments</a>

@@ -23,7 +23,6 @@
                     <th>@Html.DisplayNameFor(m => m.Name)</th>
                     <th>@Html.DisplayNameFor(m => m.Email)</th>
                     <th>@Html.DisplayNameFor(m => m.PhoneNumber)</th>
-                    <th>Disabled</th>
                     <th></th>
                 </tr>
             </thead>
@@ -34,12 +33,14 @@
                         <td>@Html.DisplayFor(m => item.Name)</td>
                         <td>@Html.DisplayFor(m => item.Email)</td>
                         <td>@Html.DisplayFor(m => item.PhoneNumber)</td>
-                        <td>@Html.DisplayFor(m => item.IsAdmin)</td>
 
                         @if (item.LockoutEnd != null && item.LockoutEnd > DateTime.Now)
                         {
                             <td>
                                 <label>Disabled</label>
+                                <a type="button" class="btn btn-outline-success" href="@Url.Action("Enable/" + item.Id)">
+                                    <i class="fas fa-smile-beam"></i>
+                                </a>
                             </td>
                         }
 
@@ -51,6 +52,9 @@
                                 </a>
                                 <a type="button" class="btn btn-outline-danger" href="@Url.Action("Delete/" + item.Id)">
                                     <i class="fas fa-trash-alt"></i>
+                                </a>
+                                <a type="button" class="btn btn-outline-info" href="@Url.Action("Disable/" + item.Id)">
+                                    <i class="far fa-frown-open"></i>
                                 </a>
                             </td>
                         }
