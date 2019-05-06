@@ -38,6 +38,9 @@ namespace GraniteHouse.Areas.Customer.Controllers
                     ShoppingCartVM.Products.Add(prod);
                 }
             }
+            else {
+                return NotFound();
+            }
             return View(ShoppingCartVM);
         }
         //GET INDEX SHOPPING CART
@@ -87,8 +90,7 @@ namespace GraniteHouse.Areas.Customer.Controllers
             }
 
             HttpContext.Session.Set("ssShoppingCart", listCartItems);
-
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof( Index));
         }
 
         //GET APPOINTMENT CONFIRMATION

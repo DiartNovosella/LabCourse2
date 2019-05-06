@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GraniteHouse.Areas.Admin.Controllers
 {
-    [Authorize(Roles = StaticUtility.SuperAdminEndUser)]
+    [Authorize(Roles = StaticUtility.SuperAdminEndUser + ", " + StaticUtility.AdminEndUser)]
     [Area("Admin")]
     public class ProductTypesController : Controller
     {

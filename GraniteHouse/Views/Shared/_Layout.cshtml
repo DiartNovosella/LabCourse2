@@ -46,7 +46,7 @@
                     <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
 
-                @if (User.IsInRole(StaticUtility.SuperAdminEndUser))
+                @if (User.IsInRole(StaticUtility.SuperAdminEndUser) || User.IsInRole(StaticUtility.AdminEndUser))
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Admin" asp-controller="ProductTypes" asp-action="Index">Produt Types</a>
@@ -58,16 +58,13 @@
                         <a class="nav-link" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="Admin" asp-controller="AdminUsers" asp-action="Index">Admin Users</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" asp-area="Admin" asp-controller="Appointments" asp-action="Index">Appointments</a>
                     </li>
                 }
-                @if (User.IsInRole(StaticUtility.AdminEndUser))
+                @if (User.IsInRole(StaticUtility.SuperAdminEndUser))
                 {
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="Admin" asp-controller="Appointments" asp-action="Index">Appointments</a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="AdminUsers" asp-action="Index">Admin Users</a>
                     </li>
                 }
                 @if (HttpContextAccessor.HttpContext.Session.Get<List<int>>("ssShoppingCart") != null)

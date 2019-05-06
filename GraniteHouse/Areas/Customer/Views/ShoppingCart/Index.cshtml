@@ -11,7 +11,7 @@
     <form method="post">
         @if (Model.Products.Count > 0)
         {
-             <div class="border rounded p-2 row">
+            <div class="border rounded p-2 row">
                 <div class="col-8 border-right">
                     <table class="table table-responsive" style="width: 100%;">
                         <tr class="table table-active">
@@ -84,8 +84,8 @@
                             <label>Appointment Date:</label>
                         </div>
                         <div class="col-12 pb-2">
-                            <input asp-for="@Model.Appointments.AppointmentDate" value="" type="text" id="datePicker" class="form-control" />
-                        </div>
+                            <input asp-for="@Model.Appointments.AppointmentDate" value="" type="date" class="form-control" />
+                        </div> @*id="datePicker"*@
                         <div class="col-12 pb-2">
                             <label>Appointment Time:</label>
                         </div>
@@ -101,28 +101,27 @@
         }
         else
         {
-           <div>You have no items in cart</div>
+            <div>You have no items in cart</div>
         }
     </form>
 </div>
 
 @section Scripts{
     <script>
+        $('.timepicker').timepicker({
+            timeFormat: 'h:mm p',
+            interval: 30,
+            minTime: '9',
+            maxTime: '6:00pm',
+            startTime: '9:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
         $(function () {
             $("#datePicker").datepicker({
                 minDate: + 1, maxDate: "+3M"
             });
-        });
-
-        $('.timepicker').timepicker({
-            timeFormat: 'h:mm',
-            interval: 20,
-            minTime: '10',
-            maxTime: '6:00pm',
-            startTime: '09:00',
-            dynamic: true,
-            dropdown: true,
-            scrollbar: true
         });
     </script>
 }

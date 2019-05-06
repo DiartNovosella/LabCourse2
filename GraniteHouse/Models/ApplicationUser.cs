@@ -13,6 +13,6 @@ namespace GraniteHouse.Models
         [Display(Name = "User")]
         public string Name { get; set; }
         [NotMapped]
-        public bool IsAdmin{ get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

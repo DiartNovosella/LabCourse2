@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GraniteHouse.Controllers
 {
-    [Authorize(Roles = StaticUtility.SuperAdminEndUser)]
+    [Authorize(Roles = StaticUtility.SuperAdminEndUser + ", " + StaticUtility.AdminEndUser)]
     [Area("Admin")]
     public class ProductsController : Controller
     {

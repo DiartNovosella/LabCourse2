@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GraniteHouse.Areas.Admin.Controllers
 {
-    [Authorize(Roles = StaticUtility.SuperAdminEndUser)]
+    [Authorize(Roles = StaticUtility.SuperAdminEndUser + ", " + StaticUtility.AdminEndUser)]
     [Area("Admin")]
     public class AdminUsersController : Controller
     {
@@ -113,7 +113,7 @@ namespace GraniteHouse.Areas.Admin.Controllers
         public IActionResult DisableConfirmed(string id)
         {
             ApplicationUser userFromDb = _db.ApplicationUsers.Where(u => u.Id == id).FirstOrDefault();
-            userFromDb.LockoutEnd = DateTime.Now.AddYears(1);
+            userFromDb.LockoutEnd = DateTime.Now.AddMinutes(10);
 
             _db.SaveChanges();
             return RedirectToAction(nameof(Index));
@@ -135,7 +135,7 @@ namespace GraniteHouse.Areas.Admin.Controllers
             return View(userFromDb);
         }
         //POST DISABLE
-        [HttpPost, ActionName("Disable")]
+        [HttpPost, ActionName("Enable")]
         [ValidateAntiForgeryToken]
         public IActionResult EnableConfirmed(string id)
         {

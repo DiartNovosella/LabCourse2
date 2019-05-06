@@ -36,7 +36,8 @@ namespace GraniteHouse.Areas.Admin.Controllers
 
             if (User.IsInRole(StaticUtility.AdminEndUser))
             {
-                appointmentVM.Appointments = appointmentVM.Appointments.Where(a => a.SalesPersonId == claim.Value).ToList();
+                appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
+                //appointmentVM.Appointments = appointmentVM.Appointments.Where(a => a.SalesPersonId).ToList();
             }
 
             if(searchName != null)
