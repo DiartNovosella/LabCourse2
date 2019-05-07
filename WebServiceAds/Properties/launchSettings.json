@@ -4,8 +4,8 @@
     "windowsAuthentication": false, 
     "anonymousAuthentication": true, 
     "iisExpress": {
-      "applicationUrl": "http://localhost:59915",
-      "sslPort": 44340
+      "applicationUrl": "http://localhost:59961",
+      "sslPort": 44371
     }
   },
   "profiles": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "AdsWebService": {
+    "WebServiceAds": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",

@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
-namespace AdsWebService
+namespace WebServiceAds
 {
     public class Startup
     {
@@ -25,6 +25,12 @@ namespace AdsWebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Models.ApplicationDbContext>(options =>
+              options.UseSqlServer(
+                  Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<Models.ApplicationDbContext>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
