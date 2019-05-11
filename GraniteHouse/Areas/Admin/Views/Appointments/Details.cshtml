@@ -8,7 +8,7 @@
 
 <br />
 <h2>Appointment Details</h2>
-<hr/>
+<hr />
 <div class="p-4 border rounded row">
     <div class="col-6">
 
@@ -32,19 +32,10 @@
 
         <div class="form-group row">
             <div class="col-4">
-                <label asp-for="Appointment.AppointmentDate">Appointment Date:</label>
+                <label asp-for="Appointment.AppointmentDate"></label>
             </div>
-            <div class="col-8 form-control">
-                @Html.DisplayFor(model => model.Appointment.AppointmentDate)
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-4">
-                <label asp-for="Appointment.AppointmentTime">Appointment Time:</label>
-            </div>
-            <div class="col-8 form-control">
-                @Html.DisplayFor(model => model.Appointment.AppointmentTime)
+            <div class="col-8">
+                <input asp-for="Appointment.AppointmentDate" readonly id="datepicker" type="text" class="form-control" />
             </div>
         </div>
 
@@ -85,12 +76,11 @@
         </div>
 
     </div>
+
     <div class="col-6">
         @* Partial View *@
         <partial name="~/Views/Shared/_AppointmentProductDetails.cshtml" model="Model.Products" />
     </div>
-
-
 
     <br />
     <div class="form-group">
@@ -105,23 +95,13 @@
         $(document).ready(function () {
             var appointmentTime = document.getElementById('datepicker').value;
             var splitData = "";
+
             if (appointmentTime.indexOf(" ") > 0) {
                 splitData = appointmentTime.split(" ");
-
             }
             else {
                 splitData = appointmentTime.split("T");
-
             }
-
-            var time = splitData[1].substring(0, 5);
-            if (time.slice(-1) == ":") {
-                time = time.substring(0, time.length - 1);
-
-            }
-            var amPmTime = splitData[2];
-            $('#datepicker').attr('value', splitData[0]);
-            $('#timepicker').attr('value', time + ' ' + amPmTime);
 
         });
     </script>

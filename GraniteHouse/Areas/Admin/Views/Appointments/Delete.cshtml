@@ -8,13 +8,14 @@
 
 <br />
 <h2>Delete Appointment</h2>
-<hr/>
+<hr />
 
 <form method="post">
     <div class="p-4 border rounded row">
         <input hidden asp-for="Appointment.Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="col-6">
+
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Appointment.CustomerName">Customer Name:</label>
@@ -23,6 +24,7 @@
                     @Html.DisplayFor(model => model.Appointment.CustomerName)
                 </div>
             </div>
+
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Appointment.CustomerEmail">Customer Email:</label>
@@ -31,6 +33,7 @@
                     @Html.DisplayFor(model => model.Appointment.CustomerEmail)
                 </div>
             </div>
+
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Appointment.AppointmentDate">Appointment Date:</label>
@@ -39,14 +42,7 @@
                     @Html.DisplayFor(model => model.Appointment.AppointmentDate)
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="Appointment.AppointmentTime">Appointment Time:</label>
-                </div>
-                <div class="col-8">
-                    @Html.DisplayFor(model => model.Appointment.AppointmentTime)
-                </div>
-            </div>
+
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Appointment.CustomerPhoneNumber">Phone Number:</label>
@@ -55,6 +51,7 @@
                     @Html.DisplayFor(model => model.Appointment.CustomerPhoneNumber)
                 </div>
             </div>
+
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Appointment.SalesPerson">Sales Person:</label>
@@ -72,6 +69,7 @@
                 </div>
 
             </div>
+
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Appointment.IsConfirmed">Is Confirmed: </label>
@@ -98,26 +96,36 @@
 
 @section Scripts{
 
-    <script>$(document).ready(function () {
+    <script>
+        $(document).ready(function () {
             var appointmentTime = document.getElementById('datepicker').value;
             var splitData = "";
+
             if (appointmentTime.indexOf(" ") > 0) {
                 splitData = appointmentTime.split(" ");
-
             }
             else {
                 splitData = appointmentTime.split("T");
-
             }
-
-            var time = splitData[1].substring(0, 5);
-            if (time.slice(-1) == ":") {
-                time = time.substring(0, time.length - 1);
-
-            }
-            var amPmTime = splitData[2];
-            $('#datepicker').attr('value', splitData[0]);
-            $('#timepicker').attr('value', time + ' ' + amPmTime);
-
-        });</script>
+        });
+    </script>
 }
+
+
+@*<div class="form-group row">
+        <div class="col-4">
+            <label asp-for="Appointment.AppointmentTime">Appointment Time:</label>
+        </div>
+        <div class="col-8">
+            @Html.DisplayFor(model => model.Appointment.AppointmentTime)
+        </div>
+    </div>
+      //var time = splitData[1].substring(0, 5);
+                //if (time.slice(-1) == ":") {
+                //    time = time.substring(0, time.length - 1);
+
+                //}
+                //var amPmTime = splitData[2];
+                //$('#datepicker').attr('value', splitData[0]);
+                //$('#timepicker').attr('value', time + ' ' + amPmTime);
+*@

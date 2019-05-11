@@ -114,8 +114,8 @@
             timeFormat: 'h:mm p',
             interval: 30,
             minTime: '10',
-            maxTime: '7:00 PM',
-            startTime: '09:00 Am',
+            startTime: '09:00 AM',
+            maxTime: '6:00 PM',
             dynamic: true,
             dropdown: true,
             scrollbar: true
@@ -124,8 +124,10 @@
         $(function () {
             $("#datepicker").datepicker({
                 dateFormat: 'dd-mm-yy',
-                minDate: +1, maxDate: "+3M"
+                minDate: +1,
+                maxDate: "+3M"
             });
         });
+
     </script>
 }
