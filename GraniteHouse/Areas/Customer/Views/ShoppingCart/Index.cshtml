@@ -85,13 +85,13 @@
                                 <label>Appointment Date : </label>
                             </div>
                             <div class="col-12" style="padding-bottom:15px">
-                                <input asp-for="@Model.Appointments.AppointmentDate" value="" type="date" class="form-control" />
+                                <input asp-for="@Model.Appointments.AppointmentDate" value="" type="text" id="datepicker" class="form-control" />
                             </div>
                             <div class="col-12">
                                 <label>Appointment Time : </label>
                             </div>
                             <div class="col-12" style="padding-bottom:15px">
-                                <input asp-for="@Model.Appointments.AppointmentTime" value="" type="time" class="form-control" />
+                                <input asp-for="@Model.Appointments.AppointmentTime" value="" type="text" class="form-control timepicker" />
                             </div>
                             <div class="col-12">
                                 <button type="submit" id="btnPlaceOrder" class="btn btn-success">Schedule Appointment</button>
@@ -114,8 +114,8 @@
             timeFormat: 'h:mm p',
             interval: 30,
             minTime: '10',
-            maxTime: '3:00pm',
-            startTime: '10:00',
+            maxTime: '7:00 PM',
+            startTime: '09:00 Am',
             dynamic: true,
             dropdown: true,
             scrollbar: true
@@ -123,6 +123,7 @@
 
         $(function () {
             $("#datepicker").datepicker({
+                dateFormat: 'dd-mm-yy',
                 minDate: +1, maxDate: "+3M"
             });
         });
