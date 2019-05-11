@@ -16,7 +16,7 @@
 
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Products.Name  "></label>
+                    <label asp-for="Products.Name">Name:</label>
                 </div>
                 <div class="col-8">
                     <input asp-for="Products.Name" class="form-control" />
@@ -26,7 +26,7 @@
 
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Products.Price"></label>
+                    <label asp-for="Products.Price">Price:</label>
                 </div>
                 <div class="col-8">
                     <input asp-for="Products.Price" class="form-control" />
@@ -36,7 +36,7 @@
 
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Products.Image"></label>
+                    <label asp-for="Products.Image">Image:</label>
                 </div>
                 <div class="col-8">
                     <input name="files" type="file" class="form-control" />
@@ -45,7 +45,7 @@
 
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="ProductTypes"></label>
+                    <label asp-for="ProductTypes">Product Type:</label>
                 </div>
                 <div class="col-8">
                     <select asp-for="@Model.Products.ProductTypeId" asp-items="Model.ProductTypes.ToSelectListItem(Model.Products.ProductTypeId)" class="form-control"></select>
@@ -54,7 +54,7 @@
 
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="SpecialTags"></label>
+                    <label asp-for="SpecialTags">Special Tag:</label>
                 </div>
                 <div class="col-8">
                     <select asp-for="@Model.Products.SpecialTagsId" asp-items="Model.SpecialTags.ToSelectListItem(Model.Products.SpecialTagsId)" class="form-control"></select>
@@ -63,7 +63,7 @@
 
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Products.ShadeColor"></label>
+                    <label asp-for="Products.ShadeColor">Colour:</label>
                 </div>
                 <div class="col-8">
                     <input asp-for="Products.ShadeColor" class="form-control" />
@@ -73,7 +73,7 @@
 
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Products.Available"></label>
+                    <label asp-for="Products.Available">Available:</label>
                 </div>
                 <div class="col-8">
                     <input asp-for="Products.Available" />

@@ -1,0 +1,31 @@
+﻿@model List<WebServiceAds.Models.Images>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@foreach (var product in Model)
+{
+    <div class="col-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="m-0 font-weight-normal">
+                    <label style="font-size: 20px;">@product.Name</label>
+                </h4>
+            </div>
+
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <img class="card-img-top" style="height: 230px;" src="@product.Id" alt="Card Image" />
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        @*<label><strong>@product.Price</strong> €</label>*@
+                    </div>
+                    <a asp-action="Details" asp-controller="Home" asp-route-id="@product.Id" class="btn btn-outline-info rounded float-right">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

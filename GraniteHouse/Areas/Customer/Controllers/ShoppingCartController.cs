@@ -28,18 +28,14 @@ namespace GraniteHouse.Areas.Customer.Controllers
         //GET INDEX SHOPPING CART
         public async Task<IActionResult> Index()
         {
-            List<int> listShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
-
-            if (listShoppingCart.Count > 0)
+            List<int> lstShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
+            if (lstShoppingCart.Count > 0)
             {
-                foreach (int cartItem in listShoppingCart)
+                foreach (int cartItem in lstShoppingCart)
                 {
                     Products prod = _db.Products.Include(p => p.SpecialTags).Include(p => p.ProductTypes).Where(p => p.Id == cartItem).FirstOrDefault();
                     ShoppingCartVM.Products.Add(prod);
                 }
-            }
-            else {
-                return NotFound();
             }
             return View(ShoppingCartVM);
         }
@@ -49,18 +45,19 @@ namespace GraniteHouse.Areas.Customer.Controllers
         [ActionName("Index")]
         public IActionResult IndexPost()
         {
-            List<int> listCartItems = HttpContext.Session.Get<List<int>>("ssShoppingCart");
+            List<int> lstCartItems = HttpContext.Session.Get<List<int>>("ssShoppingCart");
 
             ShoppingCartVM.Appointments.AppointmentDate = ShoppingCartVM.Appointments.AppointmentDate
                                                             .AddHours(ShoppingCartVM.Appointments.AppointmentTime.Hour)
                                                             .AddMinutes(ShoppingCartVM.Appointments.AppointmentTime.Minute);
+
             Appointments appointments = ShoppingCartVM.Appointments;
             _db.Appointments.Add(appointments);
             _db.SaveChanges();
 
             int appointmentId = appointments.Id;
 
-            foreach (int productId in listCartItems)
+            foreach (int productId in lstCartItems)
             {
                 ProductsSelectedForAppointment productsSelectedForAppointment = new ProductsSelectedForAppointment()
                 {
@@ -68,10 +65,11 @@ namespace GraniteHouse.Areas.Customer.Controllers
                     ProductId = productId
                 };
                 _db.ProductsSelectedForAppointments.Add(productsSelectedForAppointment);
+
             }
             _db.SaveChanges();
-            listCartItems = new List<int>();
-            HttpContext.Session.Set("ssShoppingCart", listCartItems);
+            lstCartItems = new List<int>();
+            HttpContext.Session.Set("ssShoppingCart", lstCartItems);
 
             return RedirectToAction("AppointmentConfirmation", "ShoppingCart", new { Id = appointmentId });
         }
@@ -90,7 +88,7 @@ namespace GraniteHouse.Areas.Customer.Controllers
             }
 
             HttpContext.Session.Set("ssShoppingCart", listCartItems);
-            return RedirectToAction(nameof( Index));
+            return RedirectToAction(nameof(Index));
         }
 
         //GET APPOINTMENT CONFIRMATION
@@ -100,9 +98,9 @@ namespace GraniteHouse.Areas.Customer.Controllers
 
             List<ProductsSelectedForAppointment> objProdList = _db.ProductsSelectedForAppointments.Where(p => p.AppointmentId == id).ToList();
 
-            foreach (ProductsSelectedForAppointment prodAppObj in objProdList)
+            foreach (ProductsSelectedForAppointment prodAptObj in objProdList)
             {
-                ShoppingCartVM.Products.Add(_db.Products.Include(p => p.ProductTypes).Include(p => p.SpecialTags).Where(p => p.Id == prodAppObj.ProductId).FirstOrDefault());
+                ShoppingCartVM.Products.Add(_db.Products.Include(p => p.ProductTypes).Include(p => p.SpecialTags).Where(p => p.Id == prodAptObj.ProductId).FirstOrDefault());
             }
 
             return View(ShoppingCartVM);

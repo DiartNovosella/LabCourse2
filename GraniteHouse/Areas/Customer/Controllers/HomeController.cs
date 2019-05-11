@@ -63,5 +63,16 @@ namespace GraniteHouse.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        //consume list from webServices
+        //List<Images> emp = new List<Images>();
+        //using (var httpClient = new HttpClient())
+        //{
+        //    using (var response = await httpClient.GetAsync("https://localhost:44371/api/images"))
+        //    {
+        //        string apiResponse = await response.Content.ReadAsStringAsync();
+        //        emp = JsonConvert.DeserializeObject<List<Images>>(apiResponse);
+        //    }
+        //}
     }
 }

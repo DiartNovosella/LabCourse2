@@ -9,10 +9,10 @@
 <div class="p-4 border rounded">
     <div class="form-group row">
         <div class="col-2">
-            <label asp-for="Name"></label>
+            <label asp-for="Name">Name:</label>
         </div>
-        <div class="col-5">
-            <input asp-for="Name" disabled class="form-control" />
+        <div class="col-5 form-control">
+            @Html.DisplayFor(model => model.Name)
         </div>
     </div>
     <br />

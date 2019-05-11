@@ -11,116 +11,119 @@
     <form method="post">
         @if (Model.Products.Count > 0)
         {
-            <div class="border rounded p-2 row">
-                <div class="col-8 border-right">
-                    <table class="table table-responsive" style="width: 100%;">
-                        <tr class="table table-active">
-                            <th style="text-align: center; width:20%;"></th>
-                            <th style="text-align: center;">
-                                <label asp-for="@Model.Products.FirstOrDefault().Name"></label>
-                            </th>
-                            <th style="text-align: center;">
-                                <label asp-for="@Model.Products.FirstOrDefault().Price"></label>
-                            </th>
-                            <th style="text-align: center;">
-                                <label asp-for="@Model.Products.FirstOrDefault().ShadeColor"></label>
-                            </th>
-                            <th style="text-align: center;">
-                                <label asp-for="@Model.Products.FirstOrDefault().ProductTypes.Name"></label>
-                            </th>
-                            <th></th>
-                        </tr>
-                        @foreach (var item in Model.Products)
-                        {
-                            <tr style="padding: 50px;">
-                                <td>
-                                    <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
-                                        <img src="@item.Image" style="width: 100%; margin:5px; display: block; border-radius:5px" />
-                                    </a>
-                                </td>
-                                <td style="text-align: center">
-                                    @Html.DisplayFor(c => item.Name)
-                                </td>
-                                <td style="text-align: center">
-                                    @Html.DisplayFor(c => item.Price)
-                                </td>
-                                <td style="text-align: center">
-                                    @Html.DisplayFor(c => item.ShadeColor)
-                                </td>
-                                <td style="text-align: center">
-                                    @Html.DisplayFor(c => item.ProductTypes.Name)
-                                </td>
-                                <td style="text-align: center">
-                                    <button type="submit" class="btn btn-outline-danger" asp-route-id="@item.Id" asp-action="Remove">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
+            <div class="container border border-secondary rounded" style="padding:15px;">
+                <div class="row">
+                    <div class="col-8" style="border-right:1px solid #bbb9b9;">
+                        <table class="table table-striped" width="100%">
+                            <tr class="table-info">
+                                <th style="text-align:center; width:20%"></th>
+                                <th style="text-align:center;">
+                                    <label asp-for="@Model.Products.FirstOrDefault().Name"></label>
+                                </th>
+                                <th style="text-align:center;">
+                                    <label asp-for="@Model.Products.FirstOrDefault().Price"></label>
+                                </th>
+                                <th style="text-align:center;">
+                                    <label asp-for="@Model.Products.FirstOrDefault().ShadeColor"></label>
+                                </th>
+                                <th style="text-align:center;">
+                                    <label asp-for="@Model.Products.FirstOrDefault().ProductTypes.Name"></label>
+                                </th>
+                                <th style="text-align:center;"></th>
                             </tr>
-                        }
-                    </table>
-                </div>
+                            @foreach (var item in Model.Products)
+                            {
+                                <tr style="padding:50px;">
+                                    <td>
+                                        <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
+                                            <img src="@item.Image" width="100%" style="margin:auto; display:block; border-radius:5px; border:1px solid #bbb9b9;" />
+                                        </a>
+                                    </td>
+                                    <td style="text-align:center">
+                                        @Html.DisplayFor(c => item.Name)
+                                    </td>
+                                    <td style="text-align:center">
+                                        @Html.DisplayFor(c => item.Price)
+                                    </td>
+                                    <td style="text-align:center">
+                                        @Html.DisplayFor(c => item.ShadeColor)
+                                    </td>
+                                    <td style="text-align:center">
+                                        @Html.DisplayFor(c => item.ProductTypes.Name)
+                                    </td>
+                                    <td style="text-align:center">
+                                        <button type="submit" class="btn btn-danger" asp-action="remove" asp-route-id="@item.Id">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
 
-                <div class="col-4">
-                    <div class="row">
-                        <div class="col-12 pb-2">
-                            <label>Name:</label>
-                        </div>
-                        <div class="col-12 pb-2">
-                            <input asp-for="@Model.Appointments.CustomerName" class="form-control" />
-                        </div>
-                        <div class="col-12 pb-2">
-                            <label>Email:</label>
-                        </div>
-                        <div class="col-12 pb-2">
-                            <input asp-for="@Model.Appointments.CustomerEmail" class="form-control" />
-                        </div>
-                        <div class="col-12 pb-2">
-                            <label>Phone Number:</label>
-                        </div>
-                        <div class="col-12 pb-2">
-                            <input asp-for="@Model.Appointments.CustomerPhoneNumber" class="form-control" />
-                        </div>
-                        <div class="col-12 pb-2">
-                            <label>Appointment Date:</label>
-                        </div>
-                        <div class="col-12 pb-2">
-                            <input asp-for="@Model.Appointments.AppointmentDate" value="" type="date" class="form-control" />
-                        </div> @*id="datePicker"*@
-                        <div class="col-12 pb-2">
-                            <label>Appointment Time:</label>
-                        </div>
-                        <div class="col-12 pb-2">
-                            <input asp-for="@Model.Appointments.AppointmentTime" value="" type="text" class="form-control timepicker" />
-                        </div>
-                        <div class="col-12">
-                            <button type="submit" id="btnPlaceOrder" class="btn btn-success">Schedule Appointment</button>
+                            }
+                        </table>
+                    </div>
+                    <div class="col-4" style="padding-left:30px;">
+                        <div class="row">
+                            <div class="col-12">
+                                <label>Name : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.CustomerName" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <label>Phone Number : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.CustomerPhoneNumber" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <label>Email  : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.CustomerEmail" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <label>Appointment Date : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.AppointmentDate" value="" type="date" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <label>Appointment Time : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.AppointmentTime" value="" type="time" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" id="btnPlaceOrder" class="btn btn-success">Schedule Appointment</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         }
         else
         {
-            <div>You have no items in cart</div>
+            <div>No items added to the shopping cart...</div>
         }
     </form>
 </div>
-
 @section Scripts{
     <script>
         $('.timepicker').timepicker({
             timeFormat: 'h:mm p',
             interval: 30,
-            minTime: '9',
-            maxTime: '6:00pm',
-            startTime: '9:00',
+            minTime: '10',
+            maxTime: '3:00pm',
+            startTime: '10:00',
             dynamic: true,
             dropdown: true,
             scrollbar: true
         });
+
         $(function () {
-            $("#datePicker").datepicker({
-                minDate: + 1, maxDate: "+3M"
+            $("#datepicker").datepicker({
+                minDate: +1, maxDate: "+3M"
             });
         });
     </script>

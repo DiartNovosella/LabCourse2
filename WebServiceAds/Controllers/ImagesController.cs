@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebServiceAds.Models;
 
 namespace WebServiceAds.Controllers
 {
@@ -11,5 +13,64 @@ namespace WebServiceAds.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
+        private readonly ApplicationDbContext _context;
+        [BindProperty]
+        private Images img { get; set; }
+        public ImagesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Images>>> GetAllImages()
+        {
+            return await _context.Images.ToListAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Images>> GetImages(int id)
+        {
+            var emp = await _context.Images.FindAsync(id);
+
+            if (emp == null)
+                return NotFound();
+
+            return emp;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Images>> Insert()
+        {
+            _context.Images.Add(img);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetImages), new { id = img.Id }, img);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Images>> Edit(int id)
+        {
+            if (id != img.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(img).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Images>> Delete(int id)
+        {
+            var img = await _context.Images.FindAsync(id);
+
+            if (img == null)
+                return NotFound();
+            _context.Images.Remove(img);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }

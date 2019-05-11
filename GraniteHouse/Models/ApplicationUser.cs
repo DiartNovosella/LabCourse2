@@ -10,7 +10,7 @@ namespace GraniteHouse.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        [Display(Name = "User")]
+        [Display(Name = "Sales Person")]
         public string Name { get; set; }
         [NotMapped]
         public bool IsAdmin { get; set; }

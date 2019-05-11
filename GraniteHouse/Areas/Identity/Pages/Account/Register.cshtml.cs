@@ -58,13 +58,14 @@ namespace GraniteHouse.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
             // REGISTER ADMIN SUPERADMIN
             [Required]
             public string Name { get; set; }
             [Required]
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
-            [Display(Name = "Is Super Admin  ")]
+            [Display(Name = "Is Super Admin ")]
             public bool IsSuperAdmin { get; set; }
             [Display(Name = "Is Admin ")]
             public bool IsAdmin { get; set; }
@@ -86,13 +87,13 @@ namespace GraniteHouse.Areas.Identity.Pages.Account
                 //Create Admin SuperAdmin EndUser
                 if (result.Succeeded)
                 {
+                    if (!await _roleManager.RoleExistsAsync(StaticUtility.SuperAdminEndUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(StaticUtility.SuperAdminEndUser));
+                    }
                     if (!await _roleManager.RoleExistsAsync(StaticUtility.AdminEndUser))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(StaticUtility.AdminEndUser));
-                    }
-                    if(!await _roleManager.RoleExistsAsync(StaticUtility.SuperAdminEndUser))
-                    {
-                        await _roleManager.CreateAsync(new IdentityRole(StaticUtility.SuperAdminEndUser));
                     }
                     if (!await _roleManager.RoleExistsAsync(StaticUtility.EndUser))
                     {
