@@ -23,7 +23,7 @@ namespace GraniteHouse.Areas.Admin.Controllers
         {
             _db = db;
         }
-        public async Task<IActionResult> Index(string searchName = null, string searchEmail = null, string searchPhone = null, string searchDate = null)
+        public IActionResult Index(string searchName, string searchEmail, string searchPhone, string searchDate)
         {
             System.Security.Claims.ClaimsPrincipal currentUser = this.User;
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
@@ -35,11 +35,11 @@ namespace GraniteHouse.Areas.Admin.Controllers
             };
             appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
 
-            if (User.IsInRole(StaticUtility.AdminEndUser) || User.IsInRole(StaticUtility.SuperAdminEndUser))
-            {
-                appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
-                //appointmentVM.Appointments = appointmentVM.Appointments.Where(a => a.SalesPersonId == claim.Value).ToList();
-            }
+            //if (User.IsInRole(StaticUtility.AdminEndUser) || User.IsInRole(StaticUtility.SuperAdminEndUser))
+            //{
+            //    appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
+            //    appointmentVM.Appointments = appointmentVM.Appointments.Where(a => a.SalesPersonId == claim.Value).ToList();
+            //}
 
             if (searchName != null) 
             {
@@ -66,11 +66,16 @@ namespace GraniteHouse.Areas.Admin.Controllers
                 }
             }
 
+            if(searchName == null)
+            {
+                appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
+            }
+
             return View(appointmentVM);
         }
 
         //GET EDIT 
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -95,7 +100,7 @@ namespace GraniteHouse.Areas.Admin.Controllers
         //POST EDIT
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, AppointmentDetailsViewModel objAppointmentVM)
+        public IActionResult Edit(AppointmentDetailsViewModel objAppointmentVM)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +128,7 @@ namespace GraniteHouse.Areas.Admin.Controllers
         }
        
         //Details
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -147,7 +152,7 @@ namespace GraniteHouse.Areas.Admin.Controllers
         }
 
         //GET Delete
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {

@@ -8,6 +8,9 @@ using GraniteHouse.Models;
 using GraniteHouse.Data;
 using Microsoft.EntityFrameworkCore;
 using GraniteHouse.Extensions;
+using System.Security.Claims;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace GraniteHouse.Controllers
 {
@@ -19,9 +22,19 @@ namespace GraniteHouse.Controllers
         {
             _db = db;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchProduct)
         {
+            System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
             var productList = await _db.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTags).ToListAsync();
+
+            if (searchProduct != null)
+            {
+                productList = productList.Where(a => a.Name.ToLower().Contains(searchProduct.ToLower())).ToList();
+            }
+           
             return View(productList);
         }
 
@@ -32,7 +45,7 @@ namespace GraniteHouse.Controllers
         }
         [HttpPost, ActionName("Details")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DetailsPost(int id)
+        public IActionResult DetailsPost(int id)
         {
             List<int> listShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
             if(listShoppingCart == null)
@@ -65,14 +78,14 @@ namespace GraniteHouse.Controllers
         }
 
         //consume list from webServices
-        //List<Images> emp = new List<Images>();
-        //using (var httpClient = new HttpClient())
-        //{
-        //    using (var response = await httpClient.GetAsync("https://localhost:44371/api/images"))
+        //    List<Images> emp = new List<Images>();
+        //    using (var httpClient = new HttpClient())
         //    {
-        //        string apiResponse = await response.Content.ReadAsStringAsync();
-        //        emp = JsonConvert.DeserializeObject<List<Images>>(apiResponse);
+        //        using (var response = await httpClient.GetAsync("https://localhost:44371/api/images"))
+        //        {
+        //            string apiResponse = await response.Content.ReadAsStringAsync();
+        //emp = JsonConvert.DeserializeObject<List<Images>>(apiResponse);
+        //        }
         //    }
-        //}
     }
 }

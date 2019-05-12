@@ -26,12 +26,18 @@ namespace GraniteHouse.Areas.Customer.Controllers
         }
 
         //GET INDEX SHOPPING CART
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            List<int> lstShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
-            if (lstShoppingCart.Count > 0)
+            List<int> listShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
+
+            if (listShoppingCart == null)
             {
-                foreach (int cartItem in lstShoppingCart)
+                listShoppingCart = new List<int>();
+            }
+
+            if (listShoppingCart.Count > 0)
+            {
+                foreach (int cartItem in listShoppingCart)
                 {
                     Products prod = _db.Products.Include(p => p.SpecialTags).Include(p => p.ProductTypes).Where(p => p.Id == cartItem).FirstOrDefault();
                     ShoppingCartVM.Products.Add(prod);

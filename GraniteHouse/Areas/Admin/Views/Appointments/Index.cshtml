@@ -6,9 +6,10 @@
 <form method="get">
     <br />
     <h2 class="text-info">Appointment List</h2>
+    <hr/>
     <br />
 
-    <div style="height:150px; background-color:aliceblue" class="container">
+    <div style="background-color:aliceblue" class="container p-2">
         @* We will add search criteria *@
         <div class="col-12">
 
@@ -77,16 +78,15 @@
                     @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().CustomerName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().CustomerPhoneNumber)
+                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().CustomerEmail)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().CustomerEmail)
+                    @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().CustomerPhoneNumber)
                 </th>
                 <th>
                     @Html.DisplayNameFor(m => m.Appointments.FirstOrDefault().IsConfirmed)
                 </th>
-                <th>
-                </th>
+                <th></th>
                 <th></th>
             </tr>
             @foreach (var item in Model.Appointments)
@@ -114,7 +114,6 @@
                         <partial name="_TableButtonPartial" model="item.Id" />
                     </td>
                 </tr>
-
             }
         </table>
     </div>

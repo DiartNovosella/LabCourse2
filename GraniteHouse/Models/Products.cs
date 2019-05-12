@@ -25,6 +25,5 @@ namespace GraniteHouse.Models
         public int SpecialTagsId { get; set; }
         [ForeignKey("SpecialTagsId")]
         public virtual SpecialTags SpecialTags { get; set; }
-
     }
 }
