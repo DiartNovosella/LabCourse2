@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,17 +23,13 @@ namespace GraniteHouse.Controllers
         }
         public async Task<IActionResult> Index(string searchProduct)
         {
-            System.Security.Claims.ClaimsPrincipal currentUser = this.User;
-            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-
             var productList = await _db.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTags).ToListAsync();
 
             if (searchProduct != null)
             {
                 productList = productList.Where(a => a.Name.ToLower().Contains(searchProduct.ToLower())).ToList();
             }
-           
+
             return View(productList);
         }
 

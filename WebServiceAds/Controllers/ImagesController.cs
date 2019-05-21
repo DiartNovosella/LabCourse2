@@ -15,7 +15,7 @@ namespace WebServiceAds.Controllers
     {
         private readonly ApplicationDbContext _context;
         [BindProperty]
-        private Images img { get; set; }
+        private Images Img { get; set; }
         public ImagesController(ApplicationDbContext context)
         {
             _context = context;
@@ -41,20 +41,20 @@ namespace WebServiceAds.Controllers
         [HttpPost]
         public async Task<ActionResult<Images>> Insert()
         {
-            _context.Images.Add(img);
+            _context.Images.Add(Img);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetImages), new { id = img.Id }, img);
+            return CreatedAtAction(nameof(GetImages), new { id = Img.Id }, Img);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Images>> Edit(int id)
         {
-            if (id != img.Id)
+            if (id != Img.Id)
             {
                 return BadRequest();
             }
-            _context.Entry(img).State = EntityState.Modified;
+            _context.Entry(Img).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
 

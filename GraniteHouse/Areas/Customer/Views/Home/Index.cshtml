@@ -18,7 +18,6 @@
             </div>
         </form>
 
-
     @foreach (var product in Model)
     {
         <div class="col-12 col-sm-12 col-md-4 col-xs-12">
@@ -40,7 +39,7 @@
                         <div class="btn-group">
                             <label><strong>@product.Price</strong> €</label>
                         </div>
-                        <a asp-action="Details" asp-controller="Home" asp-route-id="@product.Id" class="btn btn-outline-info rounded float-right">View Details</a>
+                        <a asp-action="Details" asp-controller="Home" asp-route-id="@product.Id" class="btn btn-outline-info rounded float-right">Buy Now</a>
                     </div>
                 </div>
             </div>

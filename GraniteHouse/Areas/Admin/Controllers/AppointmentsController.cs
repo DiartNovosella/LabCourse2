@@ -19,11 +19,12 @@ namespace GraniteHouse.Areas.Admin.Controllers
     public class AppointmentsController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private int PageSize = 5;
         public AppointmentsController(ApplicationDbContext db)
         {
             _db = db;
         }
-        public IActionResult Index(string searchName, string searchEmail, string searchPhone, string searchDate)
+        public IActionResult Index(int productPage, string searchName, string searchEmail, string searchPhone, string searchDate)
         {
             System.Security.Claims.ClaimsPrincipal currentUser = this.User;
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
@@ -33,14 +34,29 @@ namespace GraniteHouse.Areas.Admin.Controllers
             {
                Appointments = new List<Models.Appointments>()
             };
+
+            StringBuilder param = new StringBuilder();
+            param.Append("/Admin/Appointments?productsPage=:");
+            param.Append("&searchName");
+
+            if(searchName != null)
+            {
+                param.Append(searchName);
+            }
+            if (searchEmail != null)
+            {
+                param.Append(searchEmail);
+            }
+            if (searchPhone != null)
+            {
+                param.Append(searchPhone);
+            }
+            if (searchDate != null)
+            {
+                param.Append(searchDate);
+            }
+
             appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
-
-            //if (User.IsInRole(StaticUtility.AdminEndUser) || User.IsInRole(StaticUtility.SuperAdminEndUser))
-            //{
-            //    appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
-            //    appointmentVM.Appointments = appointmentVM.Appointments.Where(a => a.SalesPersonId == claim.Value).ToList();
-            //}
-
             if (searchName != null) 
             {
                 appointmentVM.Appointments = appointmentVM.Appointments.Where(a => a.CustomerName.ToLower().Contains(searchName.ToLower())).ToList();
@@ -70,6 +86,19 @@ namespace GraniteHouse.Areas.Admin.Controllers
             {
                 appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
             }
+
+            var count = appointmentVM.Appointments.Count;
+
+            appointmentVM.Appointments = appointmentVM.Appointments.OrderBy(p => p.AppointmentDate)
+                .Skip((productPage - 1) * PageSize).Take(PageSize).ToList();
+
+            appointmentVM.PagingInfo = new PagingInfo
+            {
+                CurrentPage = productPage,
+                ItemsPerPage = PageSize,
+                TotalItems = count,
+                UrlParam = param.ToString()
+            };
 
             return View(appointmentVM);
         }
@@ -186,3 +215,10 @@ namespace GraniteHouse.Areas.Admin.Controllers
         }
     } 
 }
+
+
+//if (User.IsInRole(StaticUtility.AdminEndUser) || User.IsInRole(StaticUtility.SuperAdminEndUser))
+//{
+//    appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
+//    appointmentVM.Appointments = appointmentVM.Appointments.Where(a => a.SalesPersonId == claim.Value).ToList();
+//}
